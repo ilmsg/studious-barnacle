@@ -30,15 +30,23 @@ services:
       MONGO_DATA_DIR: /data/db
       MONGO_LOG_DIR: /dev/null
 
-  logger:
+  nginx:
     build:
-      context: logger
-    environment:
-      kafkaURL: kafka:9092
-      topic: topic1
-      GroupID: logger-group
+      context: nginx
+    ports:
+      - "80:80"
     depends_on:
-      - kafka
+      - auth-api
+
+  # logger:
+  #   build:
+  #     context: logger
+  #   environment:
+  #     kafkaURL: kafka:9092
+  #     topic: topic1
+  #     GroupID: logger-group
+  #   depends_on:
+  #     - kafka
 
   auth-api:
     build:
@@ -49,8 +57,6 @@ services:
       collectionName: example_coll
       kafkaURL: kafka:9092
       topic: topic1
-    expose:
-      - "8080"
     ports:
       - "8080:8080"
     depends_on:
