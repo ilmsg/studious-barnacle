@@ -1,7 +1,12 @@
 # studious-barnacle
 
-/auths/register     post
-/auths/login        post
+    nginx 
+        -> auth-api
+            -> auth-grpc
+
+
+/api/auth/register     post
+/api/auth/login        post
 
 /users/profile      get, post
 /users/setting      get, post
